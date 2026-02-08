@@ -3,7 +3,7 @@
 }
 
 body {
-  margin: 0;
+  margin: 30px;
   font-family: 'Gloria Hallelujah', cursive;
   background: #f6f5f2; /* warm paper */
   color: #222;
@@ -51,7 +51,7 @@ body {
 .eye-level {
   position: absolute;
   left: -90px;
-  top: 25%;
+  top: 35%;
   font-size: 12px;
   transform: rotate(-4deg);
 }
@@ -187,26 +187,19 @@ body {
   animation: scribblePop 0.2s ease-out;
 }
 
-.photo-preview {
-  width: 100%;
-  margin-top: 10px;
-  border: 2px solid #222;
-  transform: rotate(-1deg);
-}
-
 .photo-strip {
   position: absolute;
   right: -90px;
   top: 80px;
-  width: 70px;
+  width: 120px;
 }
 
 .strip-photo,
 .strip-empty {
   width: 100%;
-  height: 70px;
+  height: 120px;
   border: 2px solid #222;
-  margin-bottom: 6px;
+  margin: 7px;
   background: #eaeaea;
 }
 
@@ -214,3 +207,97 @@ body {
   object-fit: cover;
   transform: rotate(-1deg);
 }
+
+.strip-photo:nth-child(2) {
+  transform: rotate(1deg);
+}
+
+.results {
+  width: 260px;
+  padding: 20px;
+  border: 3px solid #222;
+}
+
+.paper-0 {
+  background: #fafafa;
+}
+
+.paper-1 {
+  background: #f6f1e9;
+}
+
+.paper-2 {
+  background: #fdebed;
+}
+
+.paper-3 {
+  background: #000000;
+  color: #fff;
+}
+
+.paper-3 .actions button {
+  border-color: #fff;
+  color: #fff;              /* 🔑 THIS WAS MISSING */
+}
+
+.paper-3 .actions button:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.strip-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 16px;
+}
+
+.photo-strip {
+  position: static;
+}
+
+.bg-picker {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  margin-top: 12px;
+}
+
+.bg-picker span {
+  cursor: pointer;
+  transform: rotate(-2deg);
+}
+
+.filter-toggle {
+  cursor: pointer;
+  transform: rotate(-2deg);
+}
+
+.filter-toggle:hover {
+  text-decoration: underline;
+}
+
+.filter-toggle.locked {
+  opacity: 0.4;
+  cursor: not-allowed;
+  text-decoration: line-through;
+}
+
+.filter-toggle.locked::after {
+  content: ' (locked)';
+  font-size: 10px;
+}
+
+.actions {
+  display: flex;
+  justify-content: center;
+  margin-top: 16px;
+}
+
+.actions button {
+  font-family: inherit;
+  background: none;
+  border: 2px solid #222;
+  padding: 6px 12px;
+  cursor: pointer;
+  transform: rotate(-2deg);
+}
+

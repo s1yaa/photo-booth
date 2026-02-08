@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 
-export default function CameraFeed({ startSignal, onPhotosUpdate }) {
+export default function CameraFeed({ startSignal, onPhotosUpdate, isBW }) {
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
   const [photos, setPhotos] = useState([]);
@@ -17,6 +17,26 @@ export default function CameraFeed({ startSignal, onPhotosUpdate }) {
 
   const ctx = canvas.getContext('2d');
   ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+  if (isBW) {
+    const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+    const data = imageData.data;
+
+    for (let i = 0; i < data.length; i += 4) {
+      const r = data[i];
+      const g = data[i + 1];
+      const b = data[i + 2];
+
+      // classic grayscale formula
+      const gray = 0.299 * r + 0.587 * g + 0.114 * b;
+
+      data[i] = gray;
+      data[i + 1] = gray;
+      data[i + 2] = gray;
+    }
+
+    ctx.putImageData(imageData, 0, 0);
+  }
 
   const imageData = canvas.toDataURL('image/png');
   setPhotos(prev => [...prev, imageData]);
@@ -84,12 +104,15 @@ useEffect(() => {
 
       <div className="camera-frame">
         <video
-          ref={videoRef}
-          autoPlay
-          playsInline
-          muted
-          className="camera-video"
-        />
+  ref={videoRef}
+  autoPlay
+  playsInline
+  muted
+  className="camera-video"
+  style={{
+    filter: isBW ? 'grayscale(100%)' : 'none',
+  }}
+/>
         <canvas ref={canvasRef} style={{ display: 'none' }} />
         {countdown && (
   <div className="countdown-overlay">{countdown}</div>
