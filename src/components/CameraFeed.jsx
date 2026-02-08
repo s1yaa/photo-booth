@@ -1,7 +1,8 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
-export default function CameraFeed() {
+export default function CameraFeed({ startSignal }) {
   const videoRef = useRef(null);
+  const [countdown, setCountdown] = useState(null);
 
   useEffect(() => {
     async function startCamera() {
@@ -22,6 +23,25 @@ export default function CameraFeed() {
     startCamera();
   }, []);
 
+  useEffect(() => {
+  if (!startSignal) return;
+
+  let count = 3;
+  setCountdown(count);
+
+  const interval = setInterval(() => {
+    count -= 1;
+    if (count === 0) {
+      setCountdown(null);
+      clearInterval(interval);
+    } else {
+      setCountdown(count);
+    }
+  }, 1000);
+
+  return () => clearInterval(interval);
+}, [startSignal]);
+
   return (
     <div className="camera-wrap">
       <span className="eye-level">eye level →</span>
@@ -36,6 +56,9 @@ export default function CameraFeed() {
           muted
           className="camera-video"
         />
+        {countdown && (
+  <div className="countdown-overlay">{countdown}</div>
+)}
       </div>
     </div>
   );

@@ -1,7 +1,7 @@
-export default function StartButton() {
+export default function StartButton({ onStart }) {
   return (
     <div className="start-wrap">
-      <div className="start-button" />
+      <div className="start-button" onClick={onStart} />
     </div>
   );
 }
