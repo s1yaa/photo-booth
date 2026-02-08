@@ -299,5 +299,32 @@ body {
   padding: 6px 12px;
   cursor: pointer;
   transform: rotate(-2deg);
+  margin-right: 5px;
 }
 
+.upload-btn {
+  font-size: 12px;
+  cursor: pointer;
+  transform: rotate(-2deg);
+}
+
+.upload-btn.locked {
+  opacity: 0.4;
+  cursor: not-allowed;
+  text-decoration: line-through;
+}
+
+.mode-toggle {
+  display: flex;
+  justify-content: center;
+  margin: 12px 0;
+}
+
+.mode-toggle button {
+  font-family: inherit;
+  border: 2px solid #222;
+  background: #fff;
+  padding: 6px 12px;
+  cursor: pointer;
+  transform: rotate(-2deg);
+}

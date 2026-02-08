@@ -7,7 +7,7 @@ const PADDING = 20;
 const STRIP_HEIGHT =
   PADDING * 2 + PHOTO_HEIGHT * 4 + GAP * 3;
 
-export default function ResultsScreen({ photos, background, setBackground }) {
+export default function ResultsScreen({ photos, background, setBackground, onRetake }) {
   function downloadStrip() {
   const canvas = document.createElement('canvas');
   const ctx = canvas.getContext('2d');
@@ -73,6 +73,8 @@ export default function ResultsScreen({ photos, background, setBackground }) {
   <button onClick={downloadStrip}>
     download ↓
   </button>
+  <button onClick={onRetake}>↺ oops, retake strip
+</button>
 </div>
     </div>
   );

@@ -1,18 +1,31 @@
-export default function Controls({ isBW, setIsBW, isSessionActive }) {
+export default function Controls({
+  isBW,
+  setIsBW,
+  isSessionActive,
+  setMode,
+  hasPhotos
+}) {
+  const uploadDisabled = hasPhotos || isSessionActive;
+
   return (
     <div className="controls">
       <span
-        className={`filter-toggle ${isSessionActive ? 'locked' : ''}`}
+        className={`filter-toggle ${isSessionActive ? "locked" : ""}`}
         onClick={() => {
-          if (!isSessionActive) {
-            setIsBW(bw => !bw);
-          }
+          if (!isSessionActive) setIsBW(v => !v);
         }}
       >
-        {isBW ? 'b&w' : 'color'} ↔
+        {isBW ? "B/W" : "Color"}
       </span>
 
-      <span className="price">$0 · 4 pics</span>
+      <span
+        className={uploadDisabled ? "locked" : ""}
+        onClick={() => {
+          if (!uploadDisabled) setMode("upload");
+        }}
+      >
+        Upload
+      </span>
     </div>
   );
 }

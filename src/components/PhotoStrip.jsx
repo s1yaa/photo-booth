@@ -1,17 +1,15 @@
-export default function PhotoStrip({ photos }) {
+export default function PhotoStrip({ photos, isBW }) {
   return (
     <div className="photo-strip">
-      {photos.map((src, i) => (
+      {photos.map((photo, i) => (
         <img
           key={i}
-          src={src}
-          alt={`shot-${i}`}
+          src={photo}
           className="strip-photo"
+          style={{
+            filter: isBW ? "grayscale(100%)" : "none",
+          }}
         />
-      ))}
-
-      {[...Array(4 - photos.length)].map((_, i) => (
-        <div key={`empty-${i}`} className="strip-empty" />
       ))}
     </div>
   );
