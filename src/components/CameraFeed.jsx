@@ -1,8 +1,26 @@
 import { useEffect, useRef, useState } from 'react';
 
-export default function CameraFeed({ startSignal }) {
+export default function CameraFeed({ startSignal, onPhotosUpdate }) {
   const videoRef = useRef(null);
+  const canvasRef = useRef(null);
+  const [photos, setPhotos] = useState([]);
   const [countdown, setCountdown] = useState(null);
+
+  function capturePhoto() {
+  const video = videoRef.current;
+  const canvas = canvasRef.current;
+
+  if (!video || !canvas) return;
+
+  canvas.width = video.videoWidth;
+  canvas.height = video.videoHeight;
+
+  const ctx = canvas.getContext('2d');
+  ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+  const imageData = canvas.toDataURL('image/png');
+  setPhotos(prev => [...prev, imageData]);
+}
 
   useEffect(() => {
     async function startCamera() {
@@ -26,14 +44,26 @@ export default function CameraFeed({ startSignal }) {
   useEffect(() => {
   if (!startSignal) return;
 
+  let shot = 0;
   let count = 3;
+
   setCountdown(count);
 
   const interval = setInterval(() => {
     count -= 1;
+
     if (count === 0) {
-      setCountdown(null);
-      clearInterval(interval);
+      capturePhoto();
+      shot += 1;
+
+      if (shot === 4) {
+        setCountdown(null);
+        clearInterval(interval);
+        return;
+      }
+
+      count = 3;
+      setCountdown(count);
     } else {
       setCountdown(count);
     }
@@ -41,6 +71,10 @@ export default function CameraFeed({ startSignal }) {
 
   return () => clearInterval(interval);
 }, [startSignal]);
+
+useEffect(() => {
+  onPhotosUpdate?.(photos);
+}, [photos]);
 
   return (
     <div className="camera-wrap">
@@ -56,6 +90,7 @@ export default function CameraFeed({ startSignal }) {
           muted
           className="camera-video"
         />
+        <canvas ref={canvasRef} style={{ display: 'none' }} />
         {countdown && (
   <div className="countdown-overlay">{countdown}</div>
 )}
