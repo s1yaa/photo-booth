@@ -14,6 +14,8 @@ export default function BoothFrame() {
   const [isBW, setIsBW] = useState(false);
   const [isSessionActive, setIsSessionActive] = useState(false);
   const [mode, setMode] = useState("camera"); // camera | upload | result
+  const [caption, setCaption] = useState("");
+  const [emoji, setEmoji] = useState("");
 
   function handleRetake() {
     setPhotos([]);
@@ -63,12 +65,16 @@ export default function BoothFrame() {
 
       {mode === "result" && (
   <ResultsScreen
-    photos={photos}
-    background={background}
-    setBackground={setBackground}
-    onRetake={handleRetake}
-    isBW={isBW}
-  />
+  photos={photos}
+  background={background}
+  setBackground={setBackground}
+  onRetake={handleRetake}
+  isBW={isBW}
+  caption={caption}
+  setCaption={setCaption}
+  emoji={emoji}
+  setEmoji={setEmoji}
+/>
 )}
 
       {/* MODE TOGGLE */}
@@ -98,7 +104,7 @@ export default function BoothFrame() {
       {photos.length > 0 && mode !== "result" && (
   <>
     <div className="side-note">your photostrip ↓</div>
-    <PhotoStrip photos={photos} isBW={isBW} />
+    <PhotoStrip photos={photos} isBW={isBW} emoji={emoji} />
   </>
 )}
     </div>

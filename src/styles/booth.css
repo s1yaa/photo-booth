@@ -204,12 +204,27 @@ body {
 }
 
 .strip-photo {
-  object-fit: cover;
+  width: 100%;
+  height: 180px;
+  border: 2px solid #222;
+  margin: 7px 0;
+  background: #eaeaea;
+
+  position: relative; /* 🔑 REQUIRED for emoji positioning */
+  overflow: hidden;   /* 🔑 keeps image + emoji inside */
   transform: rotate(-1deg);
 }
 
 .strip-photo:nth-child(2) {
   transform: rotate(1deg);
+}
+
+/* IMAGE INSIDE STRIP */
+.strip-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;  /* 🔑 THIS was missing */
+  display: block;
 }
 
 .results {
@@ -242,6 +257,48 @@ body {
 
 .paper-3 .actions button:hover {
   background: rgba(255, 255, 255, 0.08);
+}
+
+.paper-4 {
+  background: #e8f5e9;
+}
+
+.paper-5 {
+  background: #f3e5f5;
+}
+
+.paper-6 {
+  background: #8b1e1e;
+  color: #fff;
+}
+
+.paper-7 {
+  background: #0b1c2d;
+  color: #fff;
+}
+.paper-8 {
+  background: #2b2b2b;
+  color: #fff;
+}
+.paper-9 {
+  background: #3b1c3f;
+  color: #fff;
+}
+.paper-3,
+.paper-6,
+.paper-7,
+.paper-8,
+.paper-9 {
+  color: #fff;
+}
+
+.paper-3 .actions button,
+.paper-6 .actions button,
+.paper-7 .actions button,
+.paper-8 .actions button,
+.paper-9 .actions button {
+  border-color: #fff;
+  color: #fff;
 }
 
 .strip-wrapper {
@@ -327,4 +384,89 @@ body {
   padding: 6px 12px;
   cursor: pointer;
   transform: rotate(-2deg);
+}
+
+.caption-input {
+  width: 100%;
+  font-family: 'Gloria Hallelujah', cursive;
+  border: 2px dashed #222;
+  background: transparent;
+  padding: 6px;
+  margin-bottom: 12px;
+  transform: rotate(-1deg);
+}
+
+.emoji {
+  position: absolute;
+  font-size: 28px;
+  opacity: 0.9;
+  pointer-events: none;
+}
+
+.emoji-top {
+  top: 6px;
+  right: 8px;
+  transform: rotate(-8deg);
+}
+
+.emoji-bottom {
+  bottom: 6px;
+  left: 8px;
+  transform: rotate(6deg);
+}
+
+.emoji-picker {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 12px 0 16px;
+}
+
+.emoji-picker span {
+  font-size: 22px;
+  cursor: pointer;
+  margin-right: 8px;
+}
+
+.emoji-picker .selected {
+  transform: scale(1.2);
+}
+
+.bg-picker {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;              /* 🔑 spacing */
+  font-size: 12px;
+  margin-top: 12px;
+}
+
+.bg-picker span {
+  cursor: pointer;
+  padding: 2px 6px;
+  border: 1.5px solid #222;
+  border-radius: 6px;
+  background: rgba(255,255,255,0.6);
+  transform: rotate(-2deg);
+}
+
+.bg-picker span:hover {
+  background: #fff;
+}
+
+.emoji-choice {
+  font-size: 22px;
+  cursor: pointer;
+  padding: 4px 6px;
+  border: 1.5px dashed #222;
+  border-radius: 8px;
+  background: rgba(255,255,255,0.6);
+  transform: rotate(-2deg);
+}
+
+.emoji-choice:hover {
+  background: #fff;
+}
+
+.emoji-choice.active {
+  background: #ffd6e8;
 }
