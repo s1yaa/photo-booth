@@ -18,14 +18,6 @@ export default function Controls({
         {isBW ? "B/W" : "Color"}
       </span>
 
-      <span
-        className={uploadDisabled ? "locked" : ""}
-        onClick={() => {
-          if (!uploadDisabled) setMode("upload");
-        }}
-      >
-        Upload
-      </span>
     </div>
   );
 }

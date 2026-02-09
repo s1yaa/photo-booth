@@ -61,15 +61,15 @@ export default function BoothFrame() {
         />
       )}
 
-      {/* RESULTS */}
       {mode === "result" && (
-        <ResultsScreen
-          photos={photos}
-          background={background}
-          setBackground={setBackground}
-          onRetake={handleRetake}
-        />
-      )}
+  <ResultsScreen
+    photos={photos}
+    background={background}
+    setBackground={setBackground}
+    onRetake={handleRetake}
+    isBW={isBW}
+  />
+)}
 
       {/* MODE TOGGLE */}
       {photos.length === 0 && (
@@ -95,12 +95,12 @@ export default function BoothFrame() {
 
       <Instructions />
 
-      {photos.length > 0 && (
-        <>
-          <div className="side-note">your photostrip ↓</div>
-          <PhotoStrip photos={photos} isBW={isBW} />
-        </>
-      )}
+      {photos.length > 0 && mode !== "result" && (
+  <>
+    <div className="side-note">your photostrip ↓</div>
+    <PhotoStrip photos={photos} isBW={isBW} />
+  </>
+)}
     </div>
   );
 }

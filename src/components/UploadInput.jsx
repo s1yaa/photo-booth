@@ -1,8 +1,16 @@
 export default function UploadInput({ onUpload }) {
   function handleUpload(e) {
-    const files = Array.from(e.target.files).slice(0, 4);
+    const files = Array.from(e.target.files);
 
-    const readers = files.map(
+    if (files.length === 1) {
+      alert("Please select multiple photos at once (hold Cmd / Ctrl)");
+      e.target.value = "";
+      return;
+    }
+
+    const limited = files.slice(0, 4);
+
+    const readers = limited.map(
       file =>
         new Promise(resolve => {
           const reader = new FileReader();
@@ -25,7 +33,8 @@ export default function UploadInput({ onUpload }) {
         onChange={handleUpload}
       />
       <div className="side-note">
-        upload up to 4 photos 📎
+        select up to 4 photos at once<br />
+        (hold Cmd / Ctrl or Shift)
       </div>
     </div>
   );
