@@ -92,6 +92,7 @@ const jitterY = Math.random() * 4 - 2;
   ctx.restore();
 }
 
+
       // optional frame around each photo
       ctx.filter = "none";
       ctx.strokeStyle = background === 3 ? "#fff" : "#000";
