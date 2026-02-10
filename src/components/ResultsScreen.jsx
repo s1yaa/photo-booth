@@ -68,18 +68,26 @@ const jitterY = Math.random() * 4 - 2;
       ctx.restore();
 
       if (emoji) {
-  ctx.font = "28px serif";
+  ctx.font = "28px 'Apple Color Emoji'";
   ctx.textAlign = "center";
 
+  // top-right emoji for THIS photo
   ctx.save();
-  ctx.translate(STRIP_WIDTH - 30, 30);
-  ctx.rotate(-0.3);
+  ctx.translate(
+    STRIP_WIDTH - PADDING - 16,
+    y + 28
+  );
+  ctx.rotate(-0.25);
   ctx.fillText(emoji, 0, 0);
   ctx.restore();
 
+  // bottom-left emoji for THIS photo
   ctx.save();
-  ctx.translate(30, STRIP_HEIGHT - 40);
-  ctx.rotate(0.3);
+  ctx.translate(
+    PADDING + 16,
+    y + PHOTO_HEIGHT - 12
+  );
+  ctx.rotate(0.25);
   ctx.fillText(emoji, 0, 0);
   ctx.restore();
 }
