@@ -1,12 +1,28 @@
 import { useEffect, useRef, useState } from 'react';
 
-export default function CameraFeed({ startSignal, onPhotosUpdate, isBW }) {
+function getCssFilter(mode) {
+  switch (mode) {
+    case "bw":
+      return "grayscale(100%)";
+    case "warm":
+      return "sepia(20%) saturate(120%)";
+    case "vintage":
+      return "sepia(35%) contrast(0.9) brightness(1.05)";
+    default:
+      return "none";
+  }
+}
+
+export default function CameraFeed({ startSignal, onPhotosUpdate, filterMode }) {
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
   const [photos, setPhotos] = useState([]);
   const [countdown, setCountdown] = useState(null);
+  const [flash, setFlash] = useState(false);
 
   function capturePhoto() {
+    setFlash(true);
+setTimeout(() => setFlash(false), 120);
   const video = videoRef.current;
   const canvas = canvasRef.current;
 
@@ -15,28 +31,11 @@ export default function CameraFeed({ startSignal, onPhotosUpdate, isBW }) {
   canvas.width = video.videoWidth;
   canvas.height = video.videoHeight;
 
-  const ctx = canvas.getContext('2d');
-  ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+  const ctx = canvas.getContext("2d");
 
-  if (isBW) {
-    const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-    const data = imageData.data;
-
-    for (let i = 0; i < data.length; i += 4) {
-      const r = data[i];
-      const g = data[i + 1];
-      const b = data[i + 2];
-
-      // classic grayscale formula
-      const gray = 0.299 * r + 0.587 * g + 0.114 * b;
-
-      data[i] = gray;
-      data[i + 1] = gray;
-      data[i + 2] = gray;
-    }
-
-    ctx.putImageData(imageData, 0, 0);
-  }
+ctx.filter = getCssFilter(filterMode);
+ctx.drawImage(video, 0, 0);
+ctx.filter = "none";
 
   const imageData = canvas.toDataURL('image/png');
   setPhotos(prev => [...prev, imageData]);
@@ -110,12 +109,14 @@ useEffect(() => {
   muted
   className="camera-video"
   style={{
-    filter: isBW ? 'grayscale(100%)' : 'none',
+    filter: getCssFilter(filterMode),
   }}
 />
+{flash && <div className="camera-flash" />}
         <canvas ref={canvasRef} style={{ display: 'none' }} />
         {countdown && (
-  <div className="countdown-overlay">{countdown}</div>
+  <div className="countdown-overlay">{countdown}
+</div>
 )}
       </div>
     </div>

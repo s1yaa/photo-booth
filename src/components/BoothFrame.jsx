@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import CameraFeed from "./CameraFeed";
 import Instructions from "./Instructions";
-import Controls from "./Controls";
 import StartButton from "./StartButton";
 import PhotoStrip from "./PhotoStrip";
 import ResultsScreen from "./ResultsScreen";
@@ -11,7 +10,7 @@ export default function BoothFrame() {
   const [startSignal, setStartSignal] = useState(0);
   const [photos, setPhotos] = useState([]);
   const [background, setBackground] = useState(0);
-  const [isBW, setIsBW] = useState(false);
+  const [filterMode, setFilterMode] = useState("color");
   const [isSessionActive, setIsSessionActive] = useState(false);
   const [mode, setMode] = useState("camera"); // camera | upload | result
   const [caption, setCaption] = useState("");
@@ -20,7 +19,6 @@ export default function BoothFrame() {
   function handleRetake() {
     setPhotos([]);
     setIsSessionActive(false);
-    setIsBW(false);
     setBackground(0);
     setMode("camera");
   }
@@ -35,7 +33,6 @@ export default function BoothFrame() {
 
   return (
     <div className="booth">
-      <div className="top-panel" />
 
       {/* CAMERA MODE */}
       {mode === "camera" && photos.length < 4 && (
@@ -43,7 +40,7 @@ export default function BoothFrame() {
           <CameraFeed
             startSignal={startSignal}
             onPhotosUpdate={setPhotos}
-            isBW={isBW}
+            filterMode={filterMode}
           />
 
           <StartButton
@@ -69,11 +66,10 @@ export default function BoothFrame() {
   background={background}
   setBackground={setBackground}
   onRetake={handleRetake}
-  isBW={isBW}
+  filterMode={filterMode}
+  setFilterMode={setFilterMode}
   caption={caption}
   setCaption={setCaption}
-  emoji={emoji}
-  setEmoji={setEmoji}
 />
 )}
 
@@ -92,19 +88,12 @@ export default function BoothFrame() {
         </div>
       )}
 
-      <Controls
-        isBW={isBW}
-        setIsBW={setIsBW}
-        isSessionActive={isSessionActive}
-        hasPhotos={photos.length > 0}
-      />
-
       <Instructions />
 
       {photos.length > 0 && mode !== "result" && (
   <>
     <div className="side-note">your photostrip ↓</div>
-    <PhotoStrip photos={photos} isBW={isBW} emoji={emoji} />
+    <PhotoStrip photos={photos}  filterMode={filterMode} emoji={emoji} />
   </>
 )}
     </div>

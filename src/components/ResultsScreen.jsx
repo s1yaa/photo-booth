@@ -8,12 +8,67 @@ const PADDING = 20;
 const STRIP_HEIGHT =
   PADDING * 2 + PHOTO_HEIGHT * 4 + GAP * 3;
 
+  function getCanvasFilter(mode) {
+  switch (mode) {
+    case "bw":
+      return "grayscale(100%)";
+
+    case "warm":
+      return "brightness(1.05) sepia(0.25) saturate(1.2)";
+
+    case "vintage":
+      return "sepia(0.4) contrast(0.9) brightness(1.05) saturate(0.85)";
+
+    case "color":
+    default:
+      return "none";
+  }
+}
+
+function applyPixelFilter(ctx, x, y, w, h, mode) {
+  if (mode === "color") return;
+
+  const imageData = ctx.getImageData(x, y, w, h);
+  const data = imageData.data;
+
+  for (let i = 0; i < data.length; i += 4) {
+    let r = data[i];
+    let g = data[i + 1];
+    let b = data[i + 2];
+
+    if (mode === "bw") {
+      const gray = 0.299 * r + 0.587 * g + 0.114 * b;
+      r = g = b = gray;
+    }
+
+    if (mode === "warm") {
+      r = r * 1.08;
+      g = g * 1.02;
+      b = b * 0.95;
+    }
+
+    if (mode === "vintage") {
+      const tr = 0.393*r + 0.769*g + 0.189*b;
+      const tg = 0.349*r + 0.686*g + 0.168*b;
+      const tb = 0.272*r + 0.534*g + 0.131*b;
+      r = tr; g = tg; b = tb;
+    }
+
+    data[i]     = Math.min(255, r);
+    data[i + 1] = Math.min(255, g);
+    data[i + 2] = Math.min(255, b);
+  }
+
+  ctx.putImageData(imageData, x, y);
+}
+
 export default function ResultsScreen({
   photos,
   background,
   setBackground,
   onRetake,
-  isBW,
+  filterMode,
+  setFilterMode,
   caption,
   setCaption
 }) {
@@ -47,25 +102,25 @@ export default function ResultsScreen({
 
   Promise.all(loadImages).then(images => {
     images.forEach((img, i) => {
-      const y =
-  PADDING + i * (PHOTO_HEIGHT + GAP);
-      const jitterX = Math.random() * 4 - 2;
-const jitterY = Math.random() * 4 - 2;
+  const y = PADDING + i * (PHOTO_HEIGHT + GAP);
 
-      // BW applied at export time
-      ctx.filter = isBW ? "grayscale(100%)" : "none";
+ctx.drawImage(
+  img,
+  PADDING,
+  y,
+  STRIP_WIDTH - PADDING * 2,
+  PHOTO_HEIGHT
+);
 
-      ctx.save();
-
-      ctx.drawImage(
-        img,
-        PADDING,
-        y + jitterX,
-        STRIP_WIDTH - PADDING * 2,
-        PHOTO_HEIGHT
-      );
-
-      ctx.restore();
+// 🔥 APPLY FILTER TO PIXELS
+applyPixelFilter(
+  ctx,
+  PADDING,
+  y,
+  STRIP_WIDTH - PADDING * 2,
+  PHOTO_HEIGHT,
+  filterMode
+);
 
       if (emoji) {
   ctx.font = "28px 'Apple Color Emoji'";
@@ -138,7 +193,7 @@ ctx.restore();
       </div>
 
       <div className="strip-wrapper">
-        <PhotoStrip photos={photos} isBW={isBW} emoji={emoji}/>
+        <PhotoStrip photos={photos} filterMode={filterMode} emoji={emoji}/>
       </div>
 
       <input
@@ -158,6 +213,33 @@ ctx.restore();
       {e}
     </span>
   ))}
+</div>
+
+<div className="filter-picker">
+  <span
+    className={filterMode === "color" ? "active" : ""}
+    onClick={() => setFilterMode("color")}
+  >
+    color
+  </span>
+  <span
+    className={filterMode === "bw" ? "active" : ""}
+    onClick={() => setFilterMode("bw")}
+  >
+    b&w
+  </span>
+  <span
+    className={filterMode === "warm" ? "active" : ""}
+    onClick={() => setFilterMode("warm")}
+  >
+    warm
+  </span>
+  <span
+    className={filterMode === "vintage" ? "active" : ""}
+    onClick={() => setFilterMode("vintage")}
+  >
+    vintage
+  </span>
 </div>
 
       <div className="bg-picker">

@@ -2,9 +2,14 @@
   box-sizing: border-box;
 }
 
+span, button {
+  cursor: pointer;
+}
+
 body {
   margin: 30px;
   font-family: 'Gloria Hallelujah', cursive;
+  letter-spacing: 0.2px;
   background: #f6f5f2; /* warm paper */
   color: #222;
 }
@@ -25,11 +30,12 @@ body {
 
 .booth {
   background:
+    linear-gradient(transparent, transparent),
     repeating-linear-gradient(
       0deg,
-      #fafafa,
-      #fafafa 2px,
-      #f4f4f4 3px
+      #fbfbfb,
+      #fbfbfb 3px,
+      #f3f3f3 4px
     );
 }
 
@@ -39,8 +45,7 @@ body {
   border: 3px solid #222;
   background: #fafafa;
   border-radius: 6px;
-  outline: 1px solid #222;
-  outline-offset: -6px;
+  outline: none;
 }
 
 .camera-wrap {
@@ -53,57 +58,36 @@ body {
   left: -90px;
   top: 35%;
   font-size: 12px;
-  transform: rotate(-4deg);
 }
 
 .camera-frame {
   height: 280px;
-  border: 3px solid #222;
+  border: 4px solid #222;
   display: flex;
   align-items: center;
   justify-content: center;
   position: relative;
-}
-
-.countdown {
-  font-size: 64px;
-  opacity: 0.6;
-}
-
-.controls {
-  display: flex;
-  justify-content: space-between;
-  font-size: 14px;
-  margin-bottom: 16px;
-}
-
-.price {
-  border: 2px solid #222;
-  padding: 2px 10px;
-  border-radius: 999px;
-  background: #fff;
-  transform: rotate(2deg);
-}
-
-.price::after {
-  content: '';
-  position: absolute;
-  width: 6px;
-  height: 6px;
-  border: 2px solid #222;
-  border-left: none;
-  border-top: none;
-  bottom: -6px;
-  left: 10px;
-  transform: rotate(45deg);
-  background: #fff;
+  overflow: hidden;
+  box-shadow:
+    4px 6px 0 #222,
+    inset 0 0 0 2px #000;
+  background: #111;
 }
 
 .instructions {
-  border: 2px solid #222;
-  padding: 12px;
+  border: 2px dashed #222;
+  padding: 10px;
+  font-size: 11px;
+  opacity: 0.8;
+  line-height: 1.6;
+  box-shadow: 3px 3px 0 rgba(0,0,0,0.2);
+}
+
+.side-note,
+.note {
   font-size: 12px;
-  line-height: 1.4;
+  opacity: 0.75;
+  letter-spacing: 0.3px;
 }
 
 .booth {
@@ -114,37 +98,35 @@ body {
   transform: rotate(0.3deg);
 }
 
-.instructions {
-  transform: rotate(-0.6deg);
-}
-
 .start-wrap {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
   margin: 20px 0;
 }
 
 .start-button {
-  width: 28px;
-  height: 28px;
+  width: 36px;
+  height: 36px;
   background: #d94c3d;
   border-radius: 50%;
   border: 3px solid #222;
+  box-shadow: 2px 3px 0 #222;
 }
 
-.countdown {
-  font-size: 64px;
-  opacity: 0.6;
-  transform: rotate(-6deg);
-  user-select: none;
+.start-button:active {
+  transform: translate(2px, 3px);
+  box-shadow: none;
 }
 
-.controls span:first-child {
+.start-button:hover {
+  transform: scale(1.05);
+}
+
+.start-label {
+  font-size: 12px;
+  margin-top: 4px;
   transform: rotate(-2deg);
-}
-
-.price {
-  transform: rotate(2deg);
 }
 
 .green-light {
@@ -166,14 +148,15 @@ body {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  filter: grayscale(0);
+  filter: contrast(1.05) saturate(0.95);
 }
 
 .countdown-overlay {
   position: absolute;
-  font-size: 72px;
-  opacity: 0.65;
+  font-size: 76px;
+  opacity: 0.55;
   transform: rotate(-6deg);
+  text-shadow: 2px 3px 0 rgba(0,0,0,0.15);
   user-select: none;
   pointer-events: none;
 }
@@ -200,7 +183,7 @@ body {
   height: 180px;
   border: 2px solid #222;
   margin: 7px;
-  background: #eaeaea;
+  background: #fff;
 }
 
 .strip-photo {
@@ -208,11 +191,23 @@ body {
   height: 180px;
   border: 2px solid #222;
   margin: 7px 0;
-  background: #eaeaea;
-
+  background: #fff;
+  box-shadow: 2px 3px 0 #222;
   position: relative; /* 🔑 REQUIRED for emoji positioning */
   overflow: hidden;   /* 🔑 keeps image + emoji inside */
   transform: rotate(-1deg);
+}
+
+.strip-photo::before {
+  content: '';
+  position: absolute;
+  top: -6px;
+  left: 30%;
+  width: 40px;
+  height: 10px;
+  background: rgba(255,255,255,0.6);
+  border: 1px solid rgba(0,0,0,0.2);
+  transform: rotate(-4deg);
 }
 
 .strip-photo:nth-child(2) {
@@ -301,46 +296,72 @@ body {
   color: #fff;
 }
 
+.paper-3 .caption-input,
+.paper-6 .caption-input,
+.paper-7 .caption-input,
+.paper-8 .caption-input,
+.paper-9 .caption-input {
+  border-color: #fff;
+  color: #fff;
+}
+
+.paper-3,
+.paper-6,
+.paper-7,
+.paper-8,
+.paper-9 {
+  background-image:
+    repeating-linear-gradient(
+      0deg,
+      rgba(255,255,255,0.02),
+      rgba(255,255,255,0.02) 1px,
+      transparent 2px
+    );
+}
+
+.results {
+  width: 280px; /* up from 260 */
+  padding: 24px;
+}
+
 .strip-wrapper {
   display: flex;
   justify-content: center;
-  margin-bottom: 16px;
+  margin: 12px 0 20px;
 }
 
 .photo-strip {
   position: static;
 }
 
-.bg-picker {
-  display: flex;
-  justify-content: space-between;
-  font-size: 12px;
-  margin-top: 12px;
-}
-
+.filter-picker span,
 .bg-picker span {
   cursor: pointer;
-  transform: rotate(-2deg);
+  padding: 4px 8px;
+  border: 1.5px solid #222;
+  border-radius: 999px;   /* pill */
+  background: rgba(255,255,255,0.7);
+  font-size: 11px;
 }
 
-.filter-toggle {
-  cursor: pointer;
-  transform: rotate(-2deg);
+.filter-picker span,
+.bg-picker span,
+.emoji-choice {
+  background: rgba(255,255,255,0.7);
+  backdrop-filter: blur(2px);
+  border-radius: 8px;
 }
 
-.filter-toggle:hover {
-  text-decoration: underline;
+.filter-picker span.active,
+.bg-picker span.active {
+  background: #ffd6e8;
+  box-shadow: 1px 1px 0 #222;
 }
 
-.filter-toggle.locked {
-  opacity: 0.4;
-  cursor: not-allowed;
-  text-decoration: line-through;
-}
-
-.filter-toggle.locked::after {
-  content: ' (locked)';
-  font-size: 10px;
+.filter-picker span:hover,
+.bg-picker span:hover,
+.emoji-choice:hover {
+  transform: rotate(-2deg) scale(1.05);
 }
 
 .actions {
@@ -357,6 +378,18 @@ body {
   cursor: pointer;
   transform: rotate(-2deg);
   margin-right: 5px;
+  letter-spacing: 0.6px;
+  text-transform: lowercase;
+}
+
+.actions button:first-child {
+  background: #222;
+  color: #fff;
+  transform: rotate(-1deg);
+}
+
+.actions button:last-child {
+  opacity: 0.7;
 }
 
 .upload-btn {
@@ -383,7 +416,6 @@ body {
   background: #fff;
   padding: 6px 12px;
   cursor: pointer;
-  transform: rotate(-2deg);
 }
 
 .caption-input {
@@ -392,7 +424,7 @@ body {
   border: 2px dashed #222;
   background: transparent;
   padding: 6px;
-  margin-bottom: 12px;
+  margin-bottom: 18px;
   transform: rotate(-1deg);
 }
 
@@ -401,18 +433,19 @@ body {
   font-size: 28px;
   opacity: 0.9;
   pointer-events: none;
+  filter: drop-shadow(1px 2px 0 rgba(0,0,0,0.25));
 }
 
 .emoji-top {
   top: 6px;
   right: 8px;
-  transform: rotate(-8deg);
+  transform: rotate(-12deg) translateY(-2px);
 }
 
 .emoji-bottom {
   bottom: 6px;
   left: 8px;
-  transform: rotate(6deg);
+  transform: rotate(8deg) translateY(2px);
 }
 
 .emoji-picker {
@@ -432,25 +465,20 @@ body {
   transform: scale(1.2);
 }
 
+.filter-picker {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  font-size: 12px;
+  margin-bottom: 12px;
+}
+
 .bg-picker {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;              /* 🔑 spacing */
   font-size: 12px;
   margin-top: 12px;
-}
-
-.bg-picker span {
-  cursor: pointer;
-  padding: 2px 6px;
-  border: 1.5px solid #222;
-  border-radius: 6px;
-  background: rgba(255,255,255,0.6);
-  transform: rotate(-2deg);
-}
-
-.bg-picker span:hover {
-  background: #fff;
 }
 
 .emoji-choice {
@@ -469,4 +497,38 @@ body {
 
 .emoji-choice.active {
   background: #ffd6e8;
+}
+
+.camera-flash {
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  height: 100%;
+
+  background: white;
+  opacity: 0.95;
+  z-index: 20;
+  pointer-events: none;
+
+  animation: flashFade 0.15s ease-out forwards;
+}
+
+@keyframes flashFade {
+  from { opacity: 0.9; }
+  to { opacity: 0; }
+}
+
+.emoji-picker,
+.filter-picker,
+.bg-picker {
+  margin-bottom: 14px;
+}
+
+.actions button,
+.mode-toggle button {
+  background: transparent;
+  border: 2px solid currentColor;
+  padding: 6px 12px;
 }
