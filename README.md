@@ -1,16 +1,51 @@
-# React + Vite
+# 📸 Photobooth
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A playful web-based photobooth that lets you capture memories, create photo strips, and customize them with filters, backgrounds, emojis, and captions.
 
-Currently, two official plugins are available:
+Built to feel like a nostalgic physical photobooth with a handmade, scrapbook-inspired UI.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## ✨ Features
 
-## React Compiler
+- 📷 **Live Camera Capture** — Take 4 photos directly from your webcam
+- ⏱️ **Countdown Timer** — 3-second countdown before every shot
+- ⚡ **Camera Flash Effect** — A visual flash accompanies each photo capture
+- 🖼️ **Photo Upload** — Upload up to 4 existing photos instead of using the camera
+- 🎨 **Photo Filters**
+  - Color
+  - Black & White
+  - Warm
+  - Vintage
+- 📝 **Custom Captions** — Add your own text to your photostrip
+- 💗 **Emoji Stickers** — Decorate your photos with cute emoji stickers
+- 🗒️ **Custom Backgrounds** — Choose from multiple paper-inspired backgrounds
+- 📥 **Download Photostrip** — Export your customized photostrip as a PNG
+- 🎞️ **Live Filter Preview** — See filters applied to photos before downloading
+- 📱 **Responsive Interface** — Designed with a playful, scrapbook-inspired aesthetic
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## 🛠️ Tech Stack
 
-## Expanding the ESLint configuration
+- **React**
+- **Vite**
+- **JavaScript**
+- **CSS**
+- **HTML Canvas API**
+- **Web MediaDevices API**
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## 🎨 Design
+
+The UI is inspired by:
+
+- Vintage photobooths
+- Handmade zines
+- Scrapbooks
+- Printed photographs
+- Handwritten notes
+
+The goal was to make the experience feel less like a traditional web app and more like interacting with a physical photobooth.
+
+## 🚀 Getting Started
+
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/your-username/photobooth.git
